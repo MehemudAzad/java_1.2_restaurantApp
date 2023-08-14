@@ -2,23 +2,14 @@ import java.util.ArrayList;
 
 public class RestaurantManager {
 
-    //    private String name;
+    //private String name;
     private ArrayList<Restaurant> restaurants;
     private ArrayList<Food> foodItems;
     private ArrayList<String> catagoryList;
-//    static int restaurantsAdded;
+    //static int restaurantsAdded;
     public static int foodItemsAdded;
     public static int restaurantAdded;
 
-
-//    //setters and getters
-//    public int getRestaurantsAdded() {
-//        return restaurantsAdded;
-//    }
-//
-//    public int getFoodItemsAdded() {
-//        return foodItemsAdded;
-//    }
 
     //constructors
     RestaurantManager(){
