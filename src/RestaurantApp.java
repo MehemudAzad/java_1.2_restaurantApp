@@ -5,6 +5,7 @@ public class RestaurantApp {
 
     private static final String INPUT_FILE_NAME = "restaurant.txt";
     private static final String INPUT_FILE_NAME2 = "menu.txt";
+    
     //main
     public static void main(String[] args) throws IOException {
         //take input
@@ -47,7 +48,7 @@ public class RestaurantApp {
 
 
         int choice;
-
+        int option;
         do{
             System.out.println("Main menu: ");
             System.out.println("1) Search Restaurants");
@@ -61,16 +62,16 @@ public class RestaurantApp {
             scanner.nextLine(); // Consume the newline character
 
             switch (choice) {
-                case 1:
+                case 1 -> {
                     //search by restaurants
-                    int option1;
+
                     //do loop for searching
                     do {
-                        option1 = scanner.nextInt();
+                        option = scanner.nextInt();
                         scanner.nextLine(); // Consume the newline character
 
 
-                        switch (option1) {
+                        switch (option) {
                             //search by :
                             case 1:
                                 //name
@@ -112,58 +113,76 @@ public class RestaurantApp {
                                 //back to main menu
                                 break;
                         }
-                    } while (option1 != 7);
-                    //break statement for case 1 outer
-                    break;
-                case 2:
+                    } while (option != 7);
+                }
+                //break statement for case 1 outer
+                case 2 -> {
                     //search food items
-                    int option2;
-                    option2 = scanner.nextInt();
-                    scanner.nextLine(); // Consume the newline character
-                    switch (option2) {
-                        //search food items by
-                        case 1:
-                            //name
-                            String name;
-                            name = scanner.nextLine();
 
-                            break;
-                        case 2:
-                            //name of a given restaurant
-                            break;
-                        case 3:
-                            //category
-                            break;
-                        case 4:
-                            //category in a given restaurant
-                            break;
-                        case 5:
-                            //by price range
-                            break;
-                        case 6:
-                            //by price range in a given restaurant
-                            break;
-                        case 7:
-                            //costliest foodItems on the menu in a given restaurant
-                            break;
-                        case 8:
-                            //list of restaurants and their total food Items
-                            break;
-                        case 9:
-                            //return to main menu
-                            break;
-                    }
-                    break;
-                case 3:
+                    do {
+                        String foodName;
+                        String resName;
+                        String foodCategory;
+                        int upperBoundPrice;
+                        int lowerBoundPrice;
+                        option = scanner.nextInt();
+                        scanner.nextLine(); // Consume the newline character
+                        switch (option) {
+                            //search food items by
+                            case 1:
+                                //name of food
+                                foodName = scanner.nextLine();
+                                restaurantManager.searchRestaurantByName(foodName);
+                                break;
+                            case 2:
+                                //name of a given restaurant and food
+                                foodName = scanner.nextLine();
+                                resName = scanner.nextLine();
+
+                                restaurantManager.searchFoodItemsByNameAndRest(foodName, resName);
+                                break;
+                            case 3:
+                                //category of food
+                                foodCategory = scanner.nextLine();
+                                restaurantManager.searchRestaurantsByCategory(foodCategory);
+                                break;
+                            case 4:
+                                //category in a given restaurant
+                                foodCategory = scanner.nextLine();
+                                resName = scanner.nextLine();
+                                restaurantManager.searchFoodItemsByCatagoryAndRest(resName, foodCategory);
+                                break;
+                            case 5:
+                                //by price range of food
+                                upperBoundPrice = Integer.parseInt(scanner.nextLine());
+                                lowerBoundPrice = Integer.parseInt(scanner.nextLine());
+                                restaurantManager.searchFoodItemsByPrice(lowerBoundPrice, upperBoundPrice);
+                                break;
+                            case 6:
+                                //by price range in a given restaurant
+
+                                break;
+                            case 7:
+                                //costliest foodItems on the menu in a given restaurant
+                                break;
+                            case 8:
+                                //list of restaurants and their total food Items
+                                break;
+                            case 9:
+                                //return to main menu
+                                break;
+                        }
+                    } while (option != 9);
+                }
+                case 3 -> {
                     //add restaurants
 //                    int Id,string Name,double Score,string Price,string ZipCode,Category1,Category2,Category3
 //                    System.out.println("Enter the id of restaurant: ");
 //                    int id = scanner.nextInt();
 //                    scanner.nextLine();
                     Restaurant r = null;
-
                     System.out.println("Enter the name of restaurant: ");
-                    String resName =  scanner.nextLine();
+                    String resName = scanner.nextLine();
                     System.out.println("Enter the name of restaurant: ");
                     double score = scanner.nextDouble();
                     scanner.nextLine();
@@ -176,7 +195,7 @@ public class RestaurantApp {
                     System.out.println("Enter the number of categories: ");
                     cnt = scanner.nextInt();
                     String category1, category2, category3;
-                    if(cnt == 1){
+                    if (cnt == 1) {
                         System.out.println("Enter the name of category1: ");
                         category1 = scanner.nextLine();
                         System.out.println("Enter the name of category2: ");
@@ -184,50 +203,45 @@ public class RestaurantApp {
                         System.out.println("Enter the name of category3: ");
                         category3 = scanner.nextLine();
 
-                        r = new Restaurant(RestaurantManager.restaurantAdded+1, resName, score, price, foodZipcode, category1, category2,category3);
+                        r = new Restaurant(RestaurantManager.restaurantAdded + 1, resName, score, price, foodZipcode, category1, category2, category3);
 
-                    }else if(cnt == 2){
+                    } else if (cnt == 2) {
                         System.out.println("Enter the name of category1: ");
                         category1 = scanner.nextLine();
                         System.out.println("Enter the name of category2: ");
                         category2 = scanner.nextLine();
 
-                        r = new Restaurant(RestaurantManager.restaurantAdded+1, resName, score, price, foodZipcode, category1, category2);
+                        r = new Restaurant(RestaurantManager.restaurantAdded + 1, resName, score, price, foodZipcode, category1, category2);
 
-                    }else if(cnt == 3){
+                    } else if (cnt == 3) {
                         System.out.println("Enter the name of category1: ");
                         category1 = scanner.nextLine();
 
-                        r = new Restaurant(RestaurantManager.restaurantAdded+1, resName, score, price, foodZipcode, category1);
+                        r = new Restaurant(RestaurantManager.restaurantAdded + 1, resName, score, price, foodZipcode, category1);
 
                     }
                     restaurantManager.addRestaurant(r);
-                    break;
-                case 4:
+                }
+                case 4 -> {
                     //add food item
                     //RestaurantId,Category,Name,Price
                     Food f = null;
                     System.out.println("Enter the name of food item: ");
-                    String foodName =  scanner.nextLine();
+                    String foodName = scanner.nextLine();
                     System.out.println("Enter the name of category: ");
                     String categoryName = scanner.nextLine();
                     System.out.println("Enter the price of restaurant: ");
                     double foodPrice = Double.parseDouble(scanner.nextLine());
-
-                    f = new Food(RestaurantManager.foodItemsAdded+1, categoryName, foodName, foodPrice);
+                    f = new Food(RestaurantManager.foodItemsAdded + 1, categoryName, foodName, foodPrice);
                     restaurantManager.addFood(f);
+                }
+                case 5 -> System.out.println("Exiting system.");
 
-                    break;
-                case 5:
-                    System.out.println("Exiting system.");
 //                    BufferedWriter bw = new BufferedWriter(new FileWriter(OUTPUT_FILE_NAME));
 //                    bw.write(text);
 //                    bw.write(System.lineSeparator());
 //                    bw.close();
-                    //write back into the files
-                    break;
-
-
+                //write back into the files
             }
 
         }while(choice!=5);

@@ -18,7 +18,9 @@ public class RestaurantManager {
         this.catagoryList = new ArrayList<>();
     }
 
-    //restaurant operations
+    /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        restaurant operations
+     -=-=-=-=-=-=-=-=-=-=-=-=-=-=*/
     //add food
     public void addFood(Food f){
         foodItems.add(f);
@@ -85,6 +87,16 @@ public class RestaurantManager {
 
     }
 
+    //return id by rest name
+    public int getRestIdByName(String restName){
+        for (Restaurant r : restaurants) {
+            if (r.getName().equalsIgnoreCase(restName)) {
+                return r.getId();
+            }
+        }
+        return -1;
+    }
+
     //search menu items
     //1
     public void searchFoodItemsByName(String foodName){
@@ -97,15 +109,7 @@ public class RestaurantManager {
             }
         }
     }
-    //return id by rest name
-    public int getRestIdByName(String restName){
-        for (Restaurant r : restaurants) {
-            if (r.getName().equalsIgnoreCase(restName)) {
-                return r.getId();
-            }
-        }
-        return -1;
-    }
+
     //2
     public void searchFoodItemsByNameAndRest(String foodName, String resName){
         int searchIndex = -1;
@@ -139,7 +143,7 @@ public class RestaurantManager {
         }
     }
     //5 search by price range//price is store as double in fooditems
-    public void searchByPrice(int lowerbound, int upperbound){
+    public void searchFoodItemsByPrice(int lowerbound, int upperbound){
         for (Food f : foodItems) {
             if (f.getPrice() <= upperbound && f.getPrice() >= lowerbound) {
                 System.out.println(f.getName());
@@ -147,7 +151,7 @@ public class RestaurantManager {
         }
     }
     //6 search by price range and restaurant name
-    public void searchByPrice(int lowerbound, int upperbound, String resName){
+    public void searchFoodItemsByPriceAndRestName(int lowerbound, int upperbound, String resName){
         for (Food f : foodItems) {
             if ((f.getPrice() <= upperbound && f.getPrice() >= lowerbound) && (f.getRestaurantId() == getRestIdByName(resName))) {
                 System.out.println(f.getName());
