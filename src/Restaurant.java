@@ -11,7 +11,7 @@ public class Restaurant {
     private String category2;
     private String category3;
     private String zipcode;
-    private List<String> categories;
+    private List<String> categories;//categories list to store the categories
     private List<Food> menuItems;//store the food items for the restaurants
 
     //constructors

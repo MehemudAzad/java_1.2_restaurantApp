@@ -188,7 +188,7 @@ public class RestaurantManager {
         List<String> ans = new ArrayList<>();
 
         for (Food f : foodItems) {
-            if (f.getName().toLowerCase().contains(category.toLowerCase()) && (f.getRestaurantId() == getRestIdByName(resName))) {
+            if ((f.getRestaurantId() == getRestIdByName(resName)) && f.getName().toLowerCase().contains(category.toLowerCase())) {
                 //print all the names with the matching output
                 ans.add(f.getName());
             }

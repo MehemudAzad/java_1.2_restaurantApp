@@ -66,8 +66,6 @@ public class RestaurantApp {
             switch (choice) {
                 case 1 -> {
                     //search by restaurants
-
-                    //do loop for searching
                     do {
                         String name;
                         String price;
@@ -104,7 +102,6 @@ public class RestaurantApp {
                             }
                             case 2 -> {
                                 //score
-
                                 System.out.println("Enter the lower bound: ");
                                 lower = scanner.nextInt();
                                 scanner.nextLine();
@@ -181,7 +178,6 @@ public class RestaurantApp {
                 //break statement for case 1 outer
                 case 2 -> {
                     //search food items
-
                     do {
                         String foodName;
                         String resName;
@@ -207,8 +203,10 @@ public class RestaurantApp {
                         System.out.println("3) By Category");
                         System.out.println("4) By Category in a Given Restaurant");
                         System.out.println("5) By Price Range");
-                        System.out.println();
-
+                        System.out.println("6) By Price Range in a Given Restaurant");
+                        System.out.println("7) Costliest Food Item(s) on the Menu in a Given Restaurant");
+                        System.out.println("8) List of Restaurants and Total Food Item on the Menu");
+                        System.out.println("9) Back to Main Menu");
 
                         option = scanner.nextInt();
                         scanner.nextLine(); // Consume the newline character
