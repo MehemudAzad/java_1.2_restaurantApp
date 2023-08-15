@@ -48,10 +48,8 @@ public class RestaurantApp {
         }
         br.close();
 
-
         int choice;
         int option;
-        //declaring list
 
         do{
             System.out.println("Main menu: ");
@@ -71,14 +69,25 @@ public class RestaurantApp {
 
                     //do loop for searching
                     do {
-                        option = scanner.nextInt();
-                        scanner.nextLine(); // Consume the newline character
                         String name;
                         String price;
                         String zipcode;
                         String category;
                         int lower, upper;
                         List<String> results;
+
+                        System.out.println("Restaurant Searching Options:");
+                        System.out.println("1) By Name");
+                        System.out.println("2) By Score");
+                        System.out.println("3) By Category");
+                        System.out.println("4) By Price");
+                        System.out.println("5) By Zip Code");
+                        System.out.println("6) Different Category Wise List of Restaurants");
+                        System.out.println("7) Back to Main Menu");
+
+
+                        option = scanner.nextInt();
+                        scanner.nextLine(); // Consume the newline character
 
                         switch (option) {
                             //search by :
@@ -180,6 +189,27 @@ public class RestaurantApp {
                         int upperBoundPrice;
                         int lowerBoundPrice;
                         List<String> results;
+
+                        /*Food Item Searching Options:
+                        1) By Name
+                        2) By Name in a Given Restaurant
+                        3) By Category
+                        4) By Category in a Given Restaurant
+                        5) By Price Range
+                        6) By Price Range in a Given Restaurant
+                        7) Costliest Food Item(s) on the Menu in a Given Restaurant
+                        8) List of Restaurants and Total Food Item on the Menu
+                        9) Back to Main Menu*/
+
+                        System.out.println("Food Item Searching Options:");
+                        System.out.println("1) By Name");
+                        System.out.println("2) By Name in a Given Restaurant");
+                        System.out.println("3) By Category");
+                        System.out.println("4) By Category in a Given Restaurant");
+                        System.out.println("5) By Price Range");
+                        System.out.println();
+
+
                         option = scanner.nextInt();
                         scanner.nextLine(); // Consume the newline character
                         switch (option) {
@@ -201,40 +231,96 @@ public class RestaurantApp {
                                 //name of a given restaurant and food
                                 foodName = scanner.nextLine();
                                 resName = scanner.nextLine();
-                                restaurantManager.searchFoodItemsByNameAndRest(foodName, resName);
+                                results = restaurantManager.searchFoodItemsByNameAndRest(foodName, resName);
+                                //print
+                                if (results.isEmpty()) {
+                                    System.out.println("No such food item with this name on the menu of this restaurant");
+                                } else {
+                                    System.out.println("Search results for '" + foodName +"' in '"+resName +"':");
+                                    for (String result : results) {
+                                        System.out.println(result);
+                                    }
+                                }
                             }
                             case 3 -> {
                                 //category of food
                                 foodCategory = scanner.nextLine();
-                                restaurantManager.searchRestaurantsByCategory(foodCategory);
+                                results = restaurantManager.searchRestaurantsByCategory(foodCategory);
+                                //print
+                                if (results.isEmpty()) {
+                                    System.out.println("No such food item with this category");
+                                } else {
+                                    System.out.println("Search results for '" + foodCategory +"':");
+                                    for (String result : results) {
+                                        System.out.println(result);
+                                    }
+                                }
                             }
                             case 4 -> {
                                 //category in a given restaurant
                                 foodCategory = scanner.nextLine();
                                 resName = scanner.nextLine();
-                                restaurantManager.searchFoodItemsByCatagoryAndRest(resName, foodCategory);
+                                results = restaurantManager.searchFoodItemsByCatagoryAndRest(resName, foodCategory);
+                                //print
+                                if (results.isEmpty()) {
+                                    System.out.println("“No such food item with this category on the menu of this restaurant");
+                                } else {
+                                    System.out.println("Search results for '" + foodCategory +"':");
+                                    for (String result : results) {
+                                        System.out.println(result);
+                                    }
+                                }
                             }
                             case 5 -> {
                                 //by price range of food
                                 upperBoundPrice = Integer.parseInt(scanner.nextLine());
                                 lowerBoundPrice = Integer.parseInt(scanner.nextLine());
-                                restaurantManager.searchFoodItemsByPrice(lowerBoundPrice, upperBoundPrice);
+                                results = restaurantManager.searchFoodItemsByPrice(lowerBoundPrice, upperBoundPrice);
+                                //print
+                                if (results.isEmpty()) {
+                                    System.out.println("No such food item with this price range.");
+                                } else {
+                                    System.out.println("Search results for the price range'" + lowerBoundPrice + "-" +upperBoundPrice +"':");
+                                    for (String result : results) {
+                                        System.out.println(result);
+                                    }
+                                }
                             }
                             case 6 -> {
                                 //by price range in a given restaurant
                                 upperBoundPrice = Integer.parseInt(scanner.nextLine());
                                 lowerBoundPrice = Integer.parseInt(scanner.nextLine());
                                 resName = scanner.nextLine();
-                                restaurantManager.searchFoodItemsByPriceAndRestName(lowerBoundPrice, upperBoundPrice, resName);
+                                results = restaurantManager.searchFoodItemsByPriceAndRestName(lowerBoundPrice, upperBoundPrice, resName);
+                                //print
+                                if (results.isEmpty()) {
+                                    System.out.println("No such food item with this price range on the menu of this restaurant");
+                                } else {
+                                    System.out.println("Search results for this price range in '" + resName +"':");
+                                    for (String result : results) {
+                                        System.out.println(result);
+                                    }
+                                }
                             }
                             case 7 -> {
                                 //costliest foodItems on the menu in a given restaurant
                                 resName = scanner.nextLine();
-                                restaurantManager.displayCostliestFoodItems(resName);
+                                results = restaurantManager.displayCostliestFoodItems(resName);
+
+                                if (results.isEmpty()) {
+                                    System.out.println("No such food item with this price range on the menu of this restaurant");
+                                } else {
+                                    System.out.println("The costliest food items in '" + resName +"' is/are:");
+                                    for (String result : results) {
+                                        System.out.println(result);
+                                    }
+                                }
                             }
-                            case 8 ->
+                            case 8 ->{
                                 //list of restaurants and their total food Items
-                                    restaurantManager.displayTotalNumberOfFoodItems();
+                                System.out.println("The total food items on the menu for every restaurant");
+                                restaurantManager.displayTotalNumberOfFoodItems();
+                            }
                             case 9 ->
                                 //return to main menu
                                     System.out.println("Going back to main menu.");

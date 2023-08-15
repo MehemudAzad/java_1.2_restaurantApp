@@ -11,7 +11,10 @@ public class RestaurantManager {
     public static int restaurantAdded;
 
 
-    //setters and getters
+
+     /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        setters and getters
+     -=-=-=-=-=-=-=-=-=-=-=-=-=-=*/
 
     public List<Restaurant> getRestaurants() {
         return restaurants;
@@ -21,32 +24,36 @@ public class RestaurantManager {
         return foodItems;
     }
 
-    //constructors
+    /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+       constructors
+    -=-=-=-=-=-=-=-=-=-=-=-=-=-=*/
     RestaurantManager(){
         this.restaurants = new ArrayList<>();
         this.foodItems = new ArrayList<>();
         this.catagoryList = new ArrayList<>();
     }
-//    //add food
-//    public void addFood(Food f){
-//        foodItems.add(f);
-//        foodItemsAdded++;
-//    }
-    /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-        restaurant operations
-     -=-=-=-=-=-=-=-=-=-=-=-=-=-=*/
 
     //addRestaurant
     public void addRestaurant(Restaurant r){
         //check conditions if the restaurant already exists
         restaurants.add(r);
         for(String str : r.getCategories()){
-            if(!catagoryList.contains(str)){
+             /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        restaurant operations
+     -=-=-=-=-=-=-=-=-=-=-=-=-=-=*/if(!catagoryList.contains(str)){
                 catagoryList.add(str);
             }
         }
         restaurantAdded++;
     }
+
+    // add food
+    public void addFood(Food f){
+        foodItems.add(f);
+        foodItemsAdded++;
+    }
+
+
 
 
     public int searchRestaurantByName(String name){
@@ -120,24 +127,30 @@ public class RestaurantManager {
     }
 
 
-    //return id by rest name
-    public int getRestIdByName(String restName){
-        for (Restaurant r : restaurants) {
-            if (r.getName().equalsIgnoreCase(restName)) {
-                return r.getId();
-            }
-        }
-        return -1;
-    }
 
      /*-------------------------
         Food Item Operations
      ----------------------------*/
+    /*
+        helper functions
+    */
+     //return id by rest name
+     public int getRestIdByName(String restName){
+         for (Restaurant r : restaurants) {
+             if (r.getName().equalsIgnoreCase(restName)) {
+                 return r.getId();
+             }
+         }
+         return -1;
+     }
+    /*
+        main functions
+    */
     //1
     public List<String> searchFoodItemsByName(String foodName){
         List<String> ans = new ArrayList<>();
         for (Food f : foodItems) {
-            if (f.getName().toLowerCase().contains(foodName)) {
+            if (f.getName().toLowerCase().contains(foodName.toLowerCase())) {
                 //print all the names with the matching output
                 ans.add(f.getName());
             }
@@ -148,78 +161,90 @@ public class RestaurantManager {
     //2
     public List<String> searchFoodItemsByNameAndRest(String foodName, String resName){
         List<String> ans = new ArrayList<>();
+
         for (Food f : foodItems) {
             //if name matches check for the resName if it matches too print it
-            if (f.getName().toLowerCase().contains(foodName) && (f.getRestaurantId() == getRestIdByName(resName))) {
+            if (f.getName().toLowerCase().contains(foodName.toLowerCase()) && (f.getRestaurantId() == getRestIdByName(resName))) {
                 //print all the names with the matching output
-                System.out.println(f.getName());
+                ans.add(f.getName());
             }
         }
         return ans;
     }
     //3 search by category
-    public void searchFoodItemsBy(String category){
-        int searchIndex = -1;
+    public List<String> searchFoodItemsBy(String category){
+        List<String> ans = new ArrayList<>();
+
         for (Food f : foodItems) {
-            if (f.getName().equalsIgnoreCase(category)) {
+            if (f.getName().toLowerCase().contains(category.toLowerCase())) {
                 //print all the names with the matching output
-                System.out.println(f.getName());
+                ans.add(f.getName());
             }
         }
+        return ans;
     }
 
     //4search by category and restaurant
-    public void searchFoodItemsByCatagoryAndRest(String category, String resName){
-//        int searchIndex = -1;
+    public List<String> searchFoodItemsByCatagoryAndRest(String category, String resName){
+        List<String> ans = new ArrayList<>();
+
         for (Food f : foodItems) {
-            if (f.getName().equalsIgnoreCase(category) && (f.getRestaurantId() == getRestIdByName(resName))) {
+            if (f.getName().toLowerCase().contains(category.toLowerCase()) && (f.getRestaurantId() == getRestIdByName(resName))) {
                 //print all the names with the matching output
-                System.out.println(f.getName());
+                ans.add(f.getName());
             }
         }
+
+        return ans;
     }
     //5 search by price range//price is store as double in food items
-    public void searchFoodItemsByPrice(int lowerBound, int upperBound){
+    public List<String> searchFoodItemsByPrice(int lowerBound, int upperBound){
+        List<String> ans = new ArrayList<>();
+
         for (Food f : foodItems) {
             if (f.getPrice() <= upperBound && f.getPrice() >= lowerBound) {
-                System.out.println(f.getName());
+                ans.add(f.getName());
             }
         }
+        return ans;
     }
     //6 search by price range and restaurant name
-    public void searchFoodItemsByPriceAndRestName(int lowerBound, int upperBound, String resName){
+    public List<String> searchFoodItemsByPriceAndRestName(int lowerBound, int upperBound, String resName){
+        List<String> ans = new ArrayList<>();
+
         for (Food f : foodItems) {
             if ((f.getPrice() <= upperBound && f.getPrice() >= lowerBound) && (f.getRestaurantId() == getRestIdByName(resName))) {
-                System.out.println(f.getName());
+                ans.add(f.getName());
             }
         }
+
+        return ans;
     }
-    //7 display costliest food items
-    public void displayCostliestFoodItems(String resName){
-        int costliest = 0;
+    //7 display costliest food items //I need to fix this function
+    public List<String> displayCostliestFoodItems(String resName){
+        List<String> ans = new ArrayList<>();
+        double costliest = 0;
         int resId = getRestIdByName(resName);
 
-        for(int i = 0; i < foodItems.size(); i++){
-            Food f = foodItems.get(i);
-            if(f.getPrice() > foodItems.get(costliest).getPrice()){
-                costliest = i;
+        //find the costliest price
+        for (Food f : foodItems) {
+            if (f.getRestaurantId() == resId && (f.getPrice() > costliest)) {
+                costliest = f.getPrice();//store the index
             }
         }
-
-        double cost = foodItems.get(costliest).getPrice();
         //display all the costliest items
         for(Food f: foodItems){
-            if(f.getPrice() == cost){
-                System.out.println(f.getName());
+            if(f.getRestaurantId() == resId && f.getPrice() == costliest){
+                ans.add(f.getName());
             }
         }
-
+        return ans;
     }
     //8 display number of food items in each restaurant
     public void displayTotalNumberOfFoodItems(){
-        int cnt;
-        for(Restaurant r : restaurants){
-            cnt = 0;//set cnt = 0 for each restaurant
+        int cnt; //count variable
+        for(Restaurant r : restaurants){ //loop through the restaurants
+            cnt = 0;//set cnt = 0
             System.out.print(r.getName()+ ": ");
             int resId = r.getId(); // store the id
             for(var f: foodItems){
@@ -229,7 +254,7 @@ public class RestaurantManager {
             }
             System.out.println(cnt); //print the food cnt
         }
-
+        System.out.println();//new line
     }
 
 }
