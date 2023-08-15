@@ -127,13 +127,12 @@ public class RestaurantManager {
     }
 
 
-
      /*-------------------------
         Food Item Operations
      ----------------------------*/
-    /*
+    /**************************
         helper functions
-    */
+    **************************/
      //return id by rest name
      public int getRestIdByName(String restName){
          for (Restaurant r : restaurants) {
@@ -143,10 +142,10 @@ public class RestaurantManager {
          }
          return -1;
      }
-    /*
+    /**************************
         main functions
-    */
-    //1
+    ***************************/
+    //1 searchFoodItemsByName
     public List<String> searchFoodItemsByName(String foodName){
         List<String> ans = new ArrayList<>();
         for (Food f : foodItems) {
@@ -158,7 +157,7 @@ public class RestaurantManager {
         return ans;
     }
 
-    //2
+    //2 searchFoodItemsByNameAndRest
     public List<String> searchFoodItemsByNameAndRest(String foodName, String resName){
         List<String> ans = new ArrayList<>();
 
