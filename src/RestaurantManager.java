@@ -11,6 +11,16 @@ public class RestaurantManager {
     public static int restaurantAdded;
 
 
+    //setters and getters
+
+    public List<Restaurant> getRestaurants() {
+        return restaurants;
+    }
+
+    public List<Food> getFoodItems() {
+        return foodItems;
+    }
+
     //constructors
     RestaurantManager(){
         this.restaurants = new ArrayList<>();
@@ -39,54 +49,75 @@ public class RestaurantManager {
     }
 
     //restaurant search by name
-    public void searchRestaurantByName(String name){
+//    public void searchRestaurantByName(String name){
+//        int searchIndex = -1;
+//        for(int i = 0; i<restaurants.size(); i++){
+//            Restaurant r = restaurants.get(i);
+//            if(r.getName().equalsIgnoreCase(name)){
+//                searchIndex = i;
+//                break;
+//            }
+//        }
+//        if(searchIndex != -1){
+//            restaurants.get(searchIndex).display();
+//        }
+//    }
+
+    public int searchRestaurantByName(String name){
         int searchIndex = -1;
+        List<String> ans = new ArrayList<>();
         for(int i = 0; i<restaurants.size(); i++){
             Restaurant r = restaurants.get(i);
             if(r.getName().equalsIgnoreCase(name)){
                 searchIndex = i;
-                break;
+                return searchIndex;
             }
+
         }
-        if(searchIndex != -1){
-            restaurants.get(searchIndex).display();
-        }
+        return -1;
     }
 
     //restaurant search by score
-    public void searchRestaurantsByScore(int lowerScore, int upperScore){
+    public List<String> searchRestaurantsByScore(int lowerScore, int upperScore){
+        List<String> ans = new ArrayList<>();
         for (Restaurant r : restaurants) {
             if (r.getScore() >= lowerScore && r.getScore() <= upperScore) {
-                System.out.println(r.getName());
+//                System.out.println(r.getName());
+                ans.add(r.getName());
             }
         }
-
+        return ans;
     }
     //restaurant search by category
-    public void searchRestaurantsByCategory(String categoryName){
-        int searchIndex = -1;
+    public List<String> searchRestaurantsByCategory(String categoryName){
+        List<String> ans = new ArrayList<>();
         for (Restaurant r : restaurants) {
             if (r.hasCategory(categoryName)) {
-                System.out.println(r.getName());
+                ans.add(r.getName());
             }
         }
+        return ans;
     }
     //restaurant search by price
-    public void searchRestaurantsByPrice(String price){
+    public List<String> searchRestaurantsByPrice(String price){
+        List<String> ans = new ArrayList<>();
         for (Restaurant r : restaurants) {
             if (r.getPrice().equalsIgnoreCase(price)) {
-                System.out.println(r.getName());
+                ans.add(r.getName());
             }
         }
+        return ans;
     }
     //search restaurants by zipcode
-    public void searchRestaurantsByZipcode(String zipcode){
+    public List<String> searchRestaurantsByZipcode(String zipcode){
+        List<String> ans = new ArrayList<>();
         for (Restaurant r : restaurants) {
             if (r.getZipcode().equals(zipcode)) {
                 //print the names that match the code
-                System.out.println(r.getName());
+                ans.add(r.getName());
             }
         }
+        return ans;
     }
 
     //display category wise restaurant names

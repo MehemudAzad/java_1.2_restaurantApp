@@ -1,4 +1,6 @@
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class RestaurantApp {
@@ -49,6 +51,9 @@ public class RestaurantApp {
 
         int choice;
         int option;
+        //declaring list
+        List<String> list;
+
         do{
             System.out.println("Main menu: ");
             System.out.println("1) Search Restaurants");
@@ -69,15 +74,23 @@ public class RestaurantApp {
                     do {
                         option = scanner.nextInt();
                         scanner.nextLine(); // Consume the newline character
-
+                        String name;
+                        String price;
+                        String zipcode;
 
                         switch (option) {
                             //search by :
                             case 1:
                                 //name
-                                String name;
                                 name = scanner.nextLine();
-                                restaurantManager.searchRestaurantByName(name);
+                                int index = restaurantManager.searchRestaurantByName(name);
+
+                                if(index != -1){
+                                    String resName = restaurantManager.getRestaurants().get(index).getName();
+                                    System.out.println(resName);
+                                }else{
+                                    System.out.println("No such restaurant with this name");
+                                }
                                 break;
                             case 2:
                                 //score
@@ -88,25 +101,50 @@ public class RestaurantApp {
                                 System.out.println("Enter the upperbound: ");
                                 upper = scanner.nextInt();
                                 scanner.nextLine();
-                                restaurantManager.searchRestaurantsByScore(lower, upper);
+
+                                list = restaurantManager.searchRestaurantsByScore(lower, upper);
+
+                                System.out.println("Restaurants within the score range are: ");
+                                for(String i : list){
+                                    System.out.println(i);
+                                }
+
                                 break;
                             case 3:
                                 //category
-                                System.out.println("Enter the catagory: ");
+                                System.out.println("Enter the category: ");
                                 String categoryName3;
                                 categoryName3 = scanner.nextLine();
-                                restaurantManager.searchRestaurantsByCategory(categoryName3);
+                                list = restaurantManager.searchRestaurantsByCategory(categoryName3);
+                                //print it
+                                for(String i : list){
+                                    System.out.println(i);
+                                }
+
                                 break;
                             case 4:
-                                //price
+                                //by price
+                                price = scanner.nextLine();
                                 System.out.println("Enter the price: ");
-//                              String
+                                list = restaurantManager.searchRestaurantsByPrice(price);
+                                //print it
+                                for(String i : list){
+                                    System.out.println(i);
+                                }
                                 break;
                             case 5:
-                                //zipcode
+                                //by zipcode;
+                                zipcode = scanner.nextLine();
+                                System.out.println("Enter the zipcode: ");
+                                list = restaurantManager.searchRestaurantsByZipcode(zipcode);
+                                //print it
+                                for(String i : list){
+                                    System.out.println(i);
+                                }
                                 break;
                             case 6:
                                 //different category wise
+                                System.out.println("Displaying restaurants category wise: ");
                                 restaurantManager.displayCategoryWiseNames();
                                 break;
                             case 7:
@@ -130,55 +168,52 @@ public class RestaurantApp {
                         scanner.nextLine(); // Consume the newline character
                         switch (option) {
                             //search food items by
-                            case 1:
+                            case 1 -> {
                                 //name of food
                                 foodName = scanner.nextLine();
                                 restaurantManager.searchRestaurantByName(foodName);
-                                break;
-                            case 2:
+                            }
+                            case 2 -> {
                                 //name of a given restaurant and food
                                 foodName = scanner.nextLine();
                                 resName = scanner.nextLine();
-
                                 restaurantManager.searchFoodItemsByNameAndRest(foodName, resName);
-                                break;
-                            case 3:
+                            }
+                            case 3 -> {
                                 //category of food
                                 foodCategory = scanner.nextLine();
                                 restaurantManager.searchRestaurantsByCategory(foodCategory);
-                                break;
-                            case 4:
+                            }
+                            case 4 -> {
                                 //category in a given restaurant
                                 foodCategory = scanner.nextLine();
                                 resName = scanner.nextLine();
                                 restaurantManager.searchFoodItemsByCatagoryAndRest(resName, foodCategory);
-                                break;
-                            case 5:
+                            }
+                            case 5 -> {
                                 //by price range of food
                                 upperBoundPrice = Integer.parseInt(scanner.nextLine());
                                 lowerBoundPrice = Integer.parseInt(scanner.nextLine());
                                 restaurantManager.searchFoodItemsByPrice(lowerBoundPrice, upperBoundPrice);
-                                break;
-                            case 6:
+                            }
+                            case 6 -> {
                                 //by price range in a given restaurant
                                 upperBoundPrice = Integer.parseInt(scanner.nextLine());
                                 lowerBoundPrice = Integer.parseInt(scanner.nextLine());
                                 resName = scanner.nextLine();
                                 restaurantManager.searchFoodItemsByPriceAndRestName(lowerBoundPrice, upperBoundPrice, resName);
-                                break;
-                            case 7:
+                            }
+                            case 7 -> {
                                 //costliest foodItems on the menu in a given restaurant
                                 resName = scanner.nextLine();
                                 restaurantManager.displayCostliestFoodItems(resName);
-                                break;
-                            case 8:
+                            }
+                            case 8 ->
                                 //list of restaurants and their total food Items
-                                restaurantManager.displayTotalNumberOfFoodItems();
-                                break;
-                            case 9:
+                                    restaurantManager.displayTotalNumberOfFoodItems();
+                            case 9 ->
                                 //return to main menu
-                                System.out.println("Going back to main menu.");
-                                break;
+                                    System.out.println("Going back to main menu.");
                         }
                     } while (option != 9);
                 }
