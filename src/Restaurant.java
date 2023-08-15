@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Restaurant {
     private String name;
@@ -10,7 +11,8 @@ public class Restaurant {
     private String category2;
     private String category3;
     private String zipcode;
-    private ArrayList<Food> menuItems;//store the food items for the restaurants
+    private List<String> categories;
+    private List<Food> menuItems;//store the food items for the restaurants
 
     //constructors
     Restaurant(int id, String name, double score, String price, String zipcode,  String category1, String category2, String category3){
@@ -23,6 +25,8 @@ public class Restaurant {
         this.category1 = category1;
         this.category2 = category2;
         this.category3 = category3;
+//        categories.add(category1);
+
     }//Id,Name,Score,Price,ZipCode,Category1,Category2,Category3
     Restaurant(int id, String name, double score, String price, String zipcode,  String category1, String category2){
         this.id = id;
@@ -45,10 +49,6 @@ public class Restaurant {
     //getter and setters
     public String getPrice(){
         return price;
-    }
-
-    public ArrayList<Food> getMenuItems() {
-        return menuItems;
     }
 
     public void setMenuItems(ArrayList<Food> menuItems) {

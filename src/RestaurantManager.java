@@ -1,12 +1,12 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class RestaurantManager {
 
     //private String name;
-    private ArrayList<Restaurant> restaurants;
-    private ArrayList<Food> foodItems;
+    private List<Restaurant> restaurants;
+    private List<Food> foodItems;
     private ArrayList<String> catagoryList;
-    //static int restaurantsAdded;
     public static int foodItemsAdded;
     public static int restaurantAdded;
 
@@ -86,6 +86,8 @@ public class RestaurantManager {
     public void displayCategoryWiseNames(){
 
     }
+
+
 
     //return id by rest name
     public int getRestIdByName(String restName){

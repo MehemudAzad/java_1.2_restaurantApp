@@ -111,6 +111,7 @@ public class RestaurantApp {
                                 break;
                             case 7:
                                 //back to main menu
+                                System.out.println("Going back to Main Menu.");
                                 break;
                         }
                     } while (option != 7);
@@ -160,16 +161,23 @@ public class RestaurantApp {
                                 break;
                             case 6:
                                 //by price range in a given restaurant
-
+                                upperBoundPrice = Integer.parseInt(scanner.nextLine());
+                                lowerBoundPrice = Integer.parseInt(scanner.nextLine());
+                                resName = scanner.nextLine();
+                                restaurantManager.searchFoodItemsByPriceAndRestName(lowerBoundPrice, upperBoundPrice, resName);
                                 break;
                             case 7:
                                 //costliest foodItems on the menu in a given restaurant
+                                resName = scanner.nextLine();
+                                restaurantManager.displayCostliestFoodItems(resName);
                                 break;
                             case 8:
                                 //list of restaurants and their total food Items
+                                restaurantManager.displayTotalNumberOfFoodItems();
                                 break;
                             case 9:
                                 //return to main menu
+                                System.out.println("Going back to main menu.");
                                 break;
                         }
                     } while (option != 9);
@@ -177,9 +185,6 @@ public class RestaurantApp {
                 case 3 -> {
                     //add restaurants
 //                    int Id,string Name,double Score,string Price,string ZipCode,Category1,Category2,Category3
-//                    System.out.println("Enter the id of restaurant: ");
-//                    int id = scanner.nextInt();
-//                    scanner.nextLine();
                     Restaurant r = null;
                     System.out.println("Enter the name of restaurant: ");
                     String resName = scanner.nextLine();
