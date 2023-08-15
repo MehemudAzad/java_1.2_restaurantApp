@@ -38,9 +38,7 @@ public class RestaurantManager {
         //check conditions if the restaurant already exists
         restaurants.add(r);
         for(String str : r.getCategories()){
-             /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-        restaurant operations
-     -=-=-=-=-=-=-=-=-=-=-=-=-=-=*/if(!catagoryList.contains(str)){
+            if(!catagoryList.contains(str)){
                 catagoryList.add(str);
             }
         }
@@ -54,7 +52,9 @@ public class RestaurantManager {
     }
 
 
-
+     /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        restaurant operations
+     -=-=-=-=-=-=-=-=-=-=-=-=-=-=*/
 
     public int searchRestaurantByName(String name){
         int searchIndex = -1;
