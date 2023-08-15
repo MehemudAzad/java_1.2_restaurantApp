@@ -52,7 +52,6 @@ public class RestaurantApp {
         int choice;
         int option;
         //declaring list
-        List<String> list;
 
         do{
             System.out.println("Main menu: ");
@@ -77,80 +76,96 @@ public class RestaurantApp {
                         String name;
                         String price;
                         String zipcode;
+                        String category;
+                        int lower, upper;
+                        List<String> results;
 
                         switch (option) {
                             //search by :
-                            case 1:
+                            case 1 -> {
                                 //name
                                 name = scanner.nextLine();
                                 int index = restaurantManager.searchRestaurantByName(name);
-
-                                if(index != -1){
+                                if (index != -1) {
                                     String resName = restaurantManager.getRestaurants().get(index).getName();
                                     System.out.println(resName);
-                                }else{
+                                } else {
                                     System.out.println("No such restaurant with this name");
                                 }
-                                break;
-                            case 2:
+                            }
+                            case 2 -> {
                                 //score
-                                int lower, upper;
-                                System.out.println("Enter the lowerbound: ");
+
+                                System.out.println("Enter the lower bound: ");
                                 lower = scanner.nextInt();
                                 scanner.nextLine();
-                                System.out.println("Enter the upperbound: ");
+                                System.out.println("Enter the upper bound: ");
                                 upper = scanner.nextInt();
                                 scanner.nextLine();
-
-                                list = restaurantManager.searchRestaurantsByScore(lower, upper);
-
-                                System.out.println("Restaurants within the score range are: ");
-                                for(String i : list){
-                                    System.out.println(i);
+                                results = restaurantManager.searchRestaurantsByScore(lower, upper);
+                                //print it
+                                if (results.isEmpty()) {
+                                    System.out.println("No results found for the score range.");
+                                } else {
+                                    System.out.println("Restaurants within the score range are: ");
+                                    for (String result : results) {
+                                        System.out.println(result);
+                                    }
                                 }
-
-                                break;
-                            case 3:
+                            }
+                            case 3 -> {
                                 //category
                                 System.out.println("Enter the category: ");
-                                String categoryName3;
-                                categoryName3 = scanner.nextLine();
-                                list = restaurantManager.searchRestaurantsByCategory(categoryName3);
+                                category = scanner.nextLine();
+                                results = restaurantManager.searchRestaurantsByCategory(category);
                                 //print it
-                                for(String i : list){
-                                    System.out.println(i);
+                                if (results.isEmpty()) {
+                                    System.out.println("No results found for '" + category+  "'.");
+                                } else {
+                                    System.out.println("Search results for '" + category + "':");
+                                    for (String result : results) {
+                                        System.out.println(result);
+                                    }
                                 }
-
-                                break;
-                            case 4:
+                            }
+                            case 4 -> {
                                 //by price
                                 price = scanner.nextLine();
                                 System.out.println("Enter the price: ");
-                                list = restaurantManager.searchRestaurantsByPrice(price);
+                                results = restaurantManager.searchRestaurantsByPrice(price);
                                 //print it
-                                for(String i : list){
-                                    System.out.println(i);
+                                if (results.isEmpty()) {
+                                    System.out.println("No results found for price '" + price + "'.");
+                                } else {
+                                    System.out.println("Search results for price '" + price + "':");
+                                    for (String result : results) {
+                                        System.out.println(result);
+                                    }
                                 }
-                                break;
-                            case 5:
+                            }
+                            case 5 -> {
                                 //by zipcode;
                                 zipcode = scanner.nextLine();
                                 System.out.println("Enter the zipcode: ");
-                                list = restaurantManager.searchRestaurantsByZipcode(zipcode);
+                                results = restaurantManager.searchRestaurantsByZipcode(zipcode);
                                 //print it
-                                for(String i : list){
-                                    System.out.println(i);
+                                if (results.isEmpty()) {
+                                    System.out.println("No results found for zipcode '" + zipcode + "'.");
+                                } else {
+                                    System.out.println("Search results for zipcode '" + zipcode + "':");
+                                    for (String result : results) {
+                                        System.out.println(result);
+                                    }
                                 }
-                                break;
-                            case 6:
+                            }
+                            case 6 -> {
                                 //different category wise
                                 System.out.println("Displaying restaurants category wise: ");
                                 restaurantManager.displayCategoryWiseNames();
-                                break;
-                            case 7:
+                            }
+                            case 7 ->
                                 //back to main menu
-                                System.out.println("Going back to Main Menu.");
-                                break;
+                                    System.out.println("Going back to Main Menu.");
                         }
                     } while (option != 7);
                 }
@@ -164,6 +179,7 @@ public class RestaurantApp {
                         String foodCategory;
                         int upperBoundPrice;
                         int lowerBoundPrice;
+                        List<String> results;
                         option = scanner.nextInt();
                         scanner.nextLine(); // Consume the newline character
                         switch (option) {
@@ -171,7 +187,15 @@ public class RestaurantApp {
                             case 1 -> {
                                 //name of food
                                 foodName = scanner.nextLine();
-                                restaurantManager.searchRestaurantByName(foodName);
+                                results = restaurantManager.searchFoodItemsByName(foodName);
+                                if (results.isEmpty()) {
+                                    System.out.println("No results found for '" + foodName + "'.");
+                                } else {
+                                    System.out.println("Search results for '" + foodName + "':");
+                                    for (String result : results) {
+                                        System.out.println(result);
+                                    }
+                                }
                             }
                             case 2 -> {
                                 //name of a given restaurant and food
@@ -219,7 +243,7 @@ public class RestaurantApp {
                 }
                 case 3 -> {
                     //add restaurants
-//                    int Id,string Name,double Score,string Price,string ZipCode,Category1,Category2,Category3
+//                    int id,string Name,double Score,string Price,string ZipCode,Category1,Category2,Category3
                     Restaurant r = null;
                     System.out.println("Enter the name of restaurant: ");
                     String resName = scanner.nextLine();

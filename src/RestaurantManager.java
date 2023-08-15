@@ -27,15 +27,15 @@ public class RestaurantManager {
         this.foodItems = new ArrayList<>();
         this.catagoryList = new ArrayList<>();
     }
-
+//    //add food
+//    public void addFood(Food f){
+//        foodItems.add(f);
+//        foodItemsAdded++;
+//    }
     /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         restaurant operations
      -=-=-=-=-=-=-=-=-=-=-=-=-=-=*/
-    //add food
-    public void addFood(Food f){
-        foodItems.add(f);
-        foodItemsAdded++;
-    }
+
     //addRestaurant
     public void addRestaurant(Restaurant r){
         //check conditions if the restaurant already exists
@@ -48,20 +48,6 @@ public class RestaurantManager {
         restaurantAdded++;
     }
 
-    //restaurant search by name
-//    public void searchRestaurantByName(String name){
-//        int searchIndex = -1;
-//        for(int i = 0; i<restaurants.size(); i++){
-//            Restaurant r = restaurants.get(i);
-//            if(r.getName().equalsIgnoreCase(name)){
-//                searchIndex = i;
-//                break;
-//            }
-//        }
-//        if(searchIndex != -1){
-//            restaurants.get(searchIndex).display();
-//        }
-//    }
 
     public int searchRestaurantByName(String name){
         int searchIndex = -1;
@@ -148,27 +134,28 @@ public class RestaurantManager {
         Food Item Operations
      ----------------------------*/
     //1
-    public void searchFoodItemsByName(String foodName){
-        int searchIndex = -1;
-        for(int i = 0; i<restaurants.size(); i++){
-            Food f = foodItems.get(i);
-            if(f.getName().equalsIgnoreCase(foodName)){
+    public List<String> searchFoodItemsByName(String foodName){
+        List<String> ans = new ArrayList<>();
+        for (Food f : foodItems) {
+            if (f.getName().toLowerCase().contains(foodName)) {
                 //print all the names with the matching output
-                System.out.println(f.getName());
+                ans.add(f.getName());
             }
-        }
+        }//itemName.toLowerCase().contains(query.toLowerCase())
+        return ans;
     }
 
     //2
-    public void searchFoodItemsByNameAndRest(String foodName, String resName){
-        int searchIndex = -1;
+    public List<String> searchFoodItemsByNameAndRest(String foodName, String resName){
+        List<String> ans = new ArrayList<>();
         for (Food f : foodItems) {
             //if name matches check for the resName if it matches too print it
-            if (f.getName().equalsIgnoreCase(foodName) && (f.getRestaurantId() == getRestIdByName(resName))) {
+            if (f.getName().toLowerCase().contains(foodName) && (f.getRestaurantId() == getRestIdByName(resName))) {
                 //print all the names with the matching output
                 System.out.println(f.getName());
             }
         }
+        return ans;
     }
     //3 search by category
     public void searchFoodItemsBy(String category){
