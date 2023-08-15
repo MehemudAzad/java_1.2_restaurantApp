@@ -17,6 +17,7 @@ public class Restaurant {
     //constructors
     Restaurant(int id, String name, double score, String price, String zipcode,  String category1, String category2, String category3){
         menuItems = new ArrayList<>();
+        categories = new ArrayList<>();
         this.id = id;
         this.name = name;
         this.score = score;
@@ -25,10 +26,15 @@ public class Restaurant {
         this.category1 = category1;
         this.category2 = category2;
         this.category3 = category3;
-//        categories.add(category1);
+        categories.add(category1);
+        categories.add(category2);
+        categories.add(category3);
+
 
     }//Id,Name,Score,Price,ZipCode,Category1,Category2,Category3
     Restaurant(int id, String name, double score, String price, String zipcode,  String category1, String category2){
+        menuItems = new ArrayList<>();
+        categories = new ArrayList<>();
         this.id = id;
         this.name = name;
         this.score = score;
@@ -36,14 +42,19 @@ public class Restaurant {
         this.zipcode = zipcode;
         this.category1 = category1;
         this.category2 = category2;
+        categories.add(category1);
+        categories.add(category2);
     }
     Restaurant(int id, String name, double score, String price, String zipcode,  String category1){
+        menuItems = new ArrayList<>();
+        categories = new ArrayList<>();
         this.id = id;
         this.name = name;
         this.score = score;
         this.price = price;
         this.zipcode = zipcode;
         this.category1 = category1;
+        categories.add(category1);
     }
 
     //getter and setters
@@ -65,6 +76,14 @@ public class Restaurant {
 
     public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
+    }
+
+    public List<String> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
     }
 
     public String getName() {
