@@ -32,7 +32,9 @@ public class RestaurantApp {
         }
         System.out.println();
     }
-    //main
+    /*------------------------
+        MAIN
+     -------------------------*/
     public static void main(String[] args) throws IOException {
         //initialize
         RestaurantManager restaurantManager = new RestaurantManager();
@@ -110,7 +112,7 @@ public class RestaurantApp {
                         String zipcode;
                         String category;
                         double lower, upper;
-                        List<String> results;
+                        List<Restaurant> results;
 
                         System.out.println("Restaurant Searching Options:");
                         System.out.println("1) By Name");
@@ -153,8 +155,8 @@ public class RestaurantApp {
                                     System.out.println("No results found for the score range.");
                                 } else {
                                     System.out.println("Restaurants within the score range are: ");
-                                    for (String result : results) {
-                                        System.out.println(result);
+                                    for (Restaurant result : results) {
+                                        displayRestaurantDetails(result);
                                     }
                                 }
                             }
@@ -168,8 +170,8 @@ public class RestaurantApp {
                                     System.out.println("No results found for '" + category+  "'.");
                                 } else {
                                     System.out.println("Search results for '" + category + "':");
-                                    for (String result : results) {
-                                        System.out.println(result);
+                                    for (Restaurant result : results) {
+                                        displayRestaurantDetails(result);
                                     }
                                 }
                             }
@@ -183,8 +185,8 @@ public class RestaurantApp {
                                     System.out.println("No results found for price '" + price + "'.");
                                 } else {
                                     System.out.println("Search results for price '" + price + "':");
-                                    for (String result : results) {
-                                        System.out.println(result);
+                                    for (Restaurant result : results) {
+                                        displayRestaurantDetails(result);
                                     }
                                 }
                             }
@@ -198,8 +200,8 @@ public class RestaurantApp {
                                     System.out.println("No results found for zipcode '" + zipcode + "'.");
                                 } else {
                                     System.out.println("Search results for zipcode '" + zipcode + "':");
-                                    for (String result : results) {
-                                        System.out.println(result);
+                                    for (Restaurant result : results) {
+                                        displayRestaurantDetails(result);
                                     }
                                 }
                             }
@@ -223,7 +225,7 @@ public class RestaurantApp {
                         String foodCategory;
                         double upperBoundPrice;
                         double lowerBoundPrice;
-                        List<String> results;
+                        List<Food> results;
 
                         /*Food Item Searching Options:
                         1) By Name
@@ -249,8 +251,8 @@ public class RestaurantApp {
 
                         option = scanner.nextInt();
                         scanner.nextLine(); // Consume the newline character
-                        switch (option) {
-                            //search food items by
+
+                        switch (option) {//search food items by
                             case 1 -> {
                                 //name of food
                                 System.out.println("Enter name of food: ");
@@ -260,8 +262,8 @@ public class RestaurantApp {
                                     System.out.println("No results found for '" + foodName + "'.");
                                 } else {
                                     System.out.println("Search results for '" + foodName + "':");
-                                    for (String result : results) {
-                                        System.out.println(result);
+                                    for (Food result : results) {
+                                        displayFoodDetails(result);
                                     }
                                 }
                             }
@@ -277,8 +279,8 @@ public class RestaurantApp {
                                     System.out.println("No such food item with this name on the menu of this restaurant");
                                 } else {
                                     System.out.println("Search results for '" + foodName +"' in '"+resName +"':");
-                                    for (String result : results) {
-                                        System.out.println(result);
+                                    for (Food result : results) {
+                                        displayFoodDetails(result);
                                     }
                                 }
                             }
@@ -292,8 +294,8 @@ public class RestaurantApp {
                                     System.out.println("No such food item with this category");
                                 } else {
                                     System.out.println("Search results for '" + foodCategory +"':");
-                                    for (String result : results) {
-                                        System.out.println(result);
+                                    for (Food result : results) {
+                                        displayFoodDetails(result);
                                     }
                                 }
                             }
@@ -309,8 +311,8 @@ public class RestaurantApp {
                                     System.out.println("“No such food item with this category on the menu of this restaurant");
                                 } else {
                                     System.out.println("Search results for '" + foodCategory +"':");
-                                    for (String result : results) {
-                                        System.out.println(result);
+                                    for (Food result : results) {
+                                        displayFoodDetails(result);
                                     }
                                 }
                             }
@@ -329,8 +331,8 @@ public class RestaurantApp {
                                     System.out.println("No such food item with this price range.");
                                 } else {
                                     System.out.println("Search results for the price range'" + lowerBoundPrice + "-" +upperBoundPrice +"':");
-                                    for (String result : results) {
-                                        System.out.println(result);
+                                    for (Food result : results) {
+                                        displayFoodDetails(result);
                                     }
                                 }
                             }
@@ -350,8 +352,8 @@ public class RestaurantApp {
                                     System.out.println("No such food item with this price range on the menu of this restaurant");
                                 } else {
                                     System.out.println("Search results for this price range in '" + resName +"':");
-                                    for (String result : results) {
-                                        System.out.println(result);
+                                    for (Food result : results) {
+                                        displayFoodDetails(result);
                                     }
                                 }
                             }
@@ -364,8 +366,8 @@ public class RestaurantApp {
                                     System.out.println("No such food item with this price range on the menu of this restaurant");
                                 } else {
                                     System.out.println("The costliest food items in '" + resName +"' is/are:");
-                                    for (String result : results) {
-                                        System.out.println(result);
+                                    for (Food result : results) {
+                                        displayFoodDetails(result);
                                     }
                                 }
                             }

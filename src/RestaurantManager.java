@@ -84,17 +84,14 @@ public class RestaurantManager {
         }
         return false;
     }
-    /*1,KFC,4.3,$$$,98531,Chicken,Fast Food,Family Meals
-2,IHOP,4.3,$$,77494,Breakfast and Brunch,Family Meals,Burgers
-3,Starbucks,4.9,$,99218,Coffee and Tea,Breakfast and Brunch,Bakery
-4,McDonalds,4.7,$,98346,Burgers,Fast Food,*/
+    //write restaurants to file again
     public void writeRestaurantsToFile(String OUTPUT_FILE_NAME) throws IOException {
         BufferedWriter bw = new BufferedWriter(new FileWriter(OUTPUT_FILE_NAME));
 
         for(Restaurant r: restaurants)
         {
             //1,KFC,4.3,$$$,98531,Chicken,Fast Food,Family Meals
-            bw.write(r.getId()+","+r.getName()+","+r.getPrice()+","+r.getZipcode()+",");
+            bw.write(r.getId()+","+r.getName()+","+r.getScore()+","+r.getPrice()+","+r.getZipcode()+",");
 
             List<String> categories = r.getCategories();
             for (int i = 0; i < categories.size(); i++) {
@@ -109,6 +106,7 @@ public class RestaurantManager {
         }
         bw.close();
     }
+    //write food items to file
     public void writeFoodsToFile(String OUTPUT_FILE_NAME) throws IOException {
         BufferedWriter bw = new BufferedWriter(new FileWriter(OUTPUT_FILE_NAME));
 
@@ -139,49 +137,49 @@ public class RestaurantManager {
         return -1;
     }
 
-    //restaurant search by score
-    public List<String> searchRestaurantsByScore(double lowerScore, double upperScore){
-        List<String> ans = new ArrayList<>();
+    //2 restaurant search by score
+    public List<Restaurant> searchRestaurantsByScore(double lowerScore, double upperScore){
+        List<Restaurant> ans = new ArrayList<>();
         for (Restaurant r : restaurants) {
             if (r.getScore() >= lowerScore && r.getScore() <= upperScore) {
-                ans.add(r.getName());
+                ans.add(r);
             }
         }
         return ans;
     }
-    //restaurant search by category
-    public List<String> searchRestaurantsByCategory(String categoryName){
-        List<String> ans = new ArrayList<>();
+    //3 restaurant search by category
+    public List<Restaurant> searchRestaurantsByCategory(String categoryName){
+        List<Restaurant> ans = new ArrayList<>();
         for (Restaurant r : restaurants) {
             if (r.hasCategory(categoryName)) {
-                ans.add(r.getName());
+                ans.add(r);
             }
         }
         return ans;
     }
-    //restaurant search by price
-    public List<String> searchRestaurantsByPrice(String price){
-        List<String> ans = new ArrayList<>();
+    //4 restaurant search by price
+    public List<Restaurant> searchRestaurantsByPrice(String price){
+        List<Restaurant> ans = new ArrayList<>();
         for (Restaurant r : restaurants) {
             if (r.getPrice().equalsIgnoreCase(price)) {
-                ans.add(r.getName());
+                ans.add(r);
             }
         }
         return ans;
     }
-    //search restaurants by zipcode
-    public List<String> searchRestaurantsByZipcode(String zipcode){
-        List<String> ans = new ArrayList<>();
+    //5 search restaurants by zipcode
+    public List<Restaurant> searchRestaurantsByZipcode(String zipcode){
+        List<Restaurant> ans = new ArrayList<>();
         for (Restaurant r : restaurants) {
             if (r.getZipcode().equals(zipcode)) {
                 //print the names that match the code
-                ans.add(r.getName());
+                ans.add(r);
             }
         }
         return ans;
     }
 
-    //display category wise restaurant names
+    //6 display category wise restaurant names
     public void displayCategoryWiseNames(){
         for(String str : catagoryList){
             if(str.equalsIgnoreCase("")){
@@ -203,83 +201,82 @@ public class RestaurantManager {
      ----------------------------*/
 
     //1 searchFoodItemsByName
-    public List<String> searchFoodItemsByName(String foodName){
-        List<String> ans = new ArrayList<>();
+    public List<Food> searchFoodItemsByName(String foodName){
+        List<Food> ans = new ArrayList<>();
         for (Food f : foodItems) {
             if (f.getName().toLowerCase().contains(foodName.toLowerCase())) {
                 //print all the names with the matching output
-                ans.add(f.getName());
+                ans.add(f);
             }
         }//itemName.toLowerCase().contains(query.toLowerCase())
         return ans;
     }
 
     //2 searchFoodItemsByNameAndRest
-    public List<String> searchFoodItemsByNameAndRest(String foodName, String resName){
-        List<String> ans = new ArrayList<>();
+    public List<Food> searchFoodItemsByNameAndRest(String foodName, String resName){
+        List<Food> ans = new ArrayList<>();
 
         for (Food f : foodItems) {
             //if name matches check for the resName if it matches too print it
             if (f.getName().toLowerCase().contains(foodName.toLowerCase()) && (f.getRestaurantId() == getRestIdByName(resName))) {
                 //print all the names with the matching output
-                ans.add(f.getName());
+                ans.add(f);
             }
         }
         return ans;
     }
     //3 search by category
-    public List<String> searchFoodItemsByCategory(String category){
-        List<String> ans = new ArrayList<>();
+    public List<Food> searchFoodItemsByCategory(String category){
+        List<Food> ans = new ArrayList<>();
 
         for (Food f : foodItems) {
             if (f.getName().toLowerCase().contains(category.toLowerCase())) {
                 //print all the names with the matching output
-                ans.add(f.getName());
+                ans.add(f);
             }
         }
         return ans;
     }
 
     //4search by category and restaurant
-    public List<String> searchFoodItemsByCategoryAndRest(String category, String resName){
-        List<String> ans = new ArrayList<>();
+    public List<Food> searchFoodItemsByCategoryAndRest(String category, String resName){
+        List<Food> ans = new ArrayList<>();
         int restId = getRestIdByName(resName);
         for (Food f : foodItems) {
             if ((f.getRestaurantId() ==restId) && f.getName().toLowerCase().contains(category.toLowerCase())) {
                 //print all the names with the matching output
-                ans.add(f.getName());
+                ans.add(f);
             }
         }
 
         return ans;
     }
     //5 search by price range//price is store as double in food items
-    public List<String> searchFoodItemsByPrice(double lowerBound, double upperBound){
-        List<String> ans = new ArrayList<>();
+    public List<Food> searchFoodItemsByPrice(double lowerBound, double upperBound){
+        List<Food> ans = new ArrayList<>();
 
         for (Food f : foodItems) {
             if (f.getPrice() <= upperBound && f.getPrice() >= lowerBound) {
-                ans.add(f.getName());
+                ans.add(f);
             }
         }
         return ans;
     }
     //6 search by price range and restaurant name
-    public List<String> searchFoodItemsByPriceAndRestName(double lowerBound, double upperBound, String resName){
-        List<String> ans = new ArrayList<>();
+    public List<Food> searchFoodItemsByPriceAndRestName(double lowerBound, double upperBound, String resName){
+        List<Food> ans = new ArrayList<>();
 
         int restId = getRestIdByName(resName);
         for (Food f : foodItems) {
             if ((f.getRestaurantId() == restId) && (f.getPrice() <= upperBound && f.getPrice() >= lowerBound)) {
-                ans.add(f.getName());
+                ans.add(f);
             }
         }
-
         return ans;
     }
     //7 display costliest food items //I need to fix this function
-    public List<String> displayCostliestFoodItems(String resName){
-        List<String> ans = new ArrayList<>();
+    public List<Food> displayCostliestFoodItems(String resName){
+        List<Food> ans = new ArrayList<>();
         double costliest = 0;
         int resId = getRestIdByName(resName);
 
@@ -292,7 +289,7 @@ public class RestaurantManager {
         //display all the costliest items
         for(Food f: foodItems){
             if(f.getRestaurantId() == resId && f.getPrice() == costliest){
-                ans.add(f.getName());
+                ans.add(f);
             }
         }
         return ans;

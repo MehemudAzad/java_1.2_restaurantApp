@@ -50,12 +50,4 @@ public class Food {
         this.price = price;
     }
 
-
-    //display function
-    public void display(){
-        System.out.println("Name: "+ name+ ", Category: "+ category+ ", Price: "+ price);
-    }
-
-
-
 }

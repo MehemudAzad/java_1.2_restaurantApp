@@ -141,17 +141,6 @@ public class Restaurant {
     public void addMenuItems(Food f){
         menuItems.add(f);//no need to keep track of size since array list
     }
-    //display
-    public void display(){
-        System.out.println("Name: "+ name);
-        System.out.println("Score: "+ score+ "Id: "+ id + "Price: "+ price);
-        System.out.println("Categories available: "+ category1+", "+ category2+ ", "+category3);
-        //food items available
-        System.out.println("Menu Items: ");
-        for (Food menuItem : menuItems) {
-            menuItem.display();
-        }
-    }
     //has category
     public boolean hasCategory(String categoryName){
         return category1.equalsIgnoreCase(categoryName) || category2.equalsIgnoreCase(categoryName) || category3.equalsIgnoreCase(categoryName);
