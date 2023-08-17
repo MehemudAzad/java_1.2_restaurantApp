@@ -1,3 +1,6 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +38,9 @@ public class RestaurantManager {
         restaurantAdded = 0;
     }
 
+    /**************************
+     helper functions
+     **************************/
     //addRestaurant
     public void addRestaurant(Restaurant r){
         //check conditions if the restaurant already exists
@@ -53,6 +59,67 @@ public class RestaurantManager {
         foodItemsAdded++;
     }
 
+    //return id by rest name
+    public int getRestIdByName(String restName){
+        for (Restaurant r : restaurants) {
+            if (r.getName().equalsIgnoreCase(restName)) {
+                return r.getId();
+            }
+        }
+        return -1;
+    }
+    public boolean restaurantExistsById(int id){
+        for (Restaurant r: restaurants){
+            if(r.getId() == id){
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean foodExistsInRestaurant(int id, String foodName){
+        for(Food f: foodItems){
+            if(f.getName().equalsIgnoreCase(foodName) && f.getRestaurantId() == id){
+                return true;
+            }
+        }
+        return false;
+    }
+    /*1,KFC,4.3,$$$,98531,Chicken,Fast Food,Family Meals
+2,IHOP,4.3,$$,77494,Breakfast and Brunch,Family Meals,Burgers
+3,Starbucks,4.9,$,99218,Coffee and Tea,Breakfast and Brunch,Bakery
+4,McDonalds,4.7,$,98346,Burgers,Fast Food,*/
+    public void writeRestaurantsToFile(String OUTPUT_FILE_NAME) throws IOException {
+        BufferedWriter bw = new BufferedWriter(new FileWriter(OUTPUT_FILE_NAME));
+
+        for(Restaurant r: restaurants)
+        {
+            //1,KFC,4.3,$$$,98531,Chicken,Fast Food,Family Meals
+            bw.write(r.getId()+","+r.getName()+","+r.getPrice()+","+r.getZipcode()+",");
+
+            List<String> categories = r.getCategories();
+            for (int i = 0; i < categories.size(); i++) {
+                String category = categories.get(i);
+                bw.write(category);
+
+                if (i < categories.size() - 1) {
+                    bw.write(",");
+                }
+            }
+            bw.write(System.lineSeparator());
+        }
+        bw.close();
+    }
+    public void writeFoodsToFile(String OUTPUT_FILE_NAME) throws IOException {
+        BufferedWriter bw = new BufferedWriter(new FileWriter(OUTPUT_FILE_NAME));
+
+        for(Food f: foodItems)
+        {
+            //3,Cold Drinks,Tree Top Apple Juice Box,2.65
+            bw.write(f.getRestaurantId()+","+f.getCategory()+","+f.getName()+","+f.getPrice());
+            bw.write(System.lineSeparator());
+        }
+        bw.close();
+    }
 
      /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         restaurant operations
@@ -77,7 +144,6 @@ public class RestaurantManager {
         List<String> ans = new ArrayList<>();
         for (Restaurant r : restaurants) {
             if (r.getScore() >= lowerScore && r.getScore() <= upperScore) {
-//                System.out.println(r.getName());
                 ans.add(r.getName());
             }
         }
@@ -118,6 +184,9 @@ public class RestaurantManager {
     //display category wise restaurant names
     public void displayCategoryWiseNames(){
         for(String str : catagoryList){
+            if(str.equalsIgnoreCase("")){
+                continue;
+            }
             System.out.print(str+": ");
             for(Restaurant r : restaurants){
                 if(r.getCategories().contains(str)){
@@ -132,21 +201,7 @@ public class RestaurantManager {
      /*-------------------------
         Food Item Operations
      ----------------------------*/
-    /**************************
-        helper functions
-    **************************/
-     //return id by rest name
-     public int getRestIdByName(String restName){
-         for (Restaurant r : restaurants) {
-             if (r.getName().equalsIgnoreCase(restName)) {
-                 return r.getId();
-             }
-         }
-         return -1;
-     }
-    /**************************
-        main functions
-    ***************************/
+
     //1 searchFoodItemsByName
     public List<String> searchFoodItemsByName(String foodName){
         List<String> ans = new ArrayList<>();
@@ -258,5 +313,7 @@ public class RestaurantManager {
         }
         System.out.println();//new line
     }
+
+
 
 }

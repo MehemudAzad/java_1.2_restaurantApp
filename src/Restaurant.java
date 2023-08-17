@@ -14,7 +14,9 @@ public class Restaurant {
     private List<String> categories;//categories list to store the categories
     private List<Food> menuItems;//store the food items for the restaurants
 
-    //constructors
+    /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+       constructors
+    -=-=-=-=-=-=-=-=-=-=-=-=-=-=*/
     Restaurant(int id, String name, double score, String price, String zipcode,  String category1, String category2, String category3){
         menuItems = new ArrayList<>();
         categories = new ArrayList<>();
@@ -57,7 +59,9 @@ public class Restaurant {
         categories.add(category1);
     }
 
-    //getter and setters
+    /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+       getter and setters
+    -=-=-=-=-=-=-=-=-=-=-=-=-=-=*/
     public String getPrice(){
         return price;
     }

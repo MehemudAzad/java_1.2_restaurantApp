@@ -7,8 +7,10 @@ public class RestaurantApp {
 
     private static final String INPUT_FILE_NAME = "restaurant.txt";
     private static final String INPUT_FILE_NAME2 = "menu.txt";
-    private static final String OUTPUT_FILE_NAME = "output.txt";
 
+    /*------------------------
+        DISPLAY FUNCTIONS
+     -------------------------*/
 
     public static void displayFoodDetails(Food f) {
         System.out.println("Restaurant ID: " + f.getRestaurantId());
@@ -389,6 +391,13 @@ public class RestaurantApp {
                     Restaurant r = null;
                     System.out.println("Enter the name of restaurant: ");
                     resName = scanner.nextLine();
+                    //check if restaurant already exist
+                    int resCheck =restaurantManager.getRestIdByName(resName);
+                    if(resCheck != -1){
+                        System.out.println("Restaurant already exists");
+                        break;
+                    }
+
                     System.out.println("Enter the score of restaurant: ");
                     score = scanner.nextDouble();
                     scanner.nextLine();
@@ -432,28 +441,44 @@ public class RestaurantApp {
                 }
                 case 4 -> {
                     //add food item
+                    int id;
+                    String foodName;
+                    String categoryName;
+                    double foodPrice;
                     //RestaurantId,Category,Name,Price
                     Food f = null;
                     System.out.println("Enter the id of restaurant: ");
-                    int id = scanner.nextInt();
+                    id = scanner.nextInt();
                     scanner.nextLine();
+
+                    //check if restaurant exists
+                    boolean restCheck = restaurantManager.restaurantExistsById(id);
+                    if(!restCheck){
+                        System.out.println("Restaurant doesn't exist");
+                    }
+
                     System.out.println("Enter the name of food item: ");
-                    String foodName = scanner.nextLine();
+                    foodName = scanner.nextLine();
+                    //check if food already exists in that restaurant
+                    boolean foodNameCheck = restaurantManager.foodExistsInRestaurant(id, foodName);
+                    if(foodNameCheck){
+                        System.out.println("Food item already exists in the restaurant");
+                    }
+
                     System.out.println("Enter the name of category: ");
-                    String categoryName = scanner.nextLine();
+                    categoryName = scanner.nextLine();
                     System.out.println("Enter the price of restaurant: ");
-                    double foodPrice = Double.parseDouble(scanner.nextLine());
+                    foodPrice = Double.parseDouble(scanner.nextLine());
                     f = new Food(id, categoryName, foodName, foodPrice);
                     restaurantManager.addFood(f);
                     System.out.println("Food item added successfully");
                 }
-                case 5 -> System.out.println("Exiting system.");
+                case 5 -> {
+                    System.out.println("Exiting system.");
+                    restaurantManager.writeRestaurantsToFile(INPUT_FILE_NAME);
+                    restaurantManager.writeFoodsToFile(INPUT_FILE_NAME2);
+                }
 
-//                    BufferedWriter bw = new BufferedWriter(new FileWriter(OUTPUT_FILE_NAME));
-//                    bw.write();
-//                    bw.write(System.lineSeparator());
-//                    bw.close();
-                //write back into the files
             }
 
         }while(choice!=5);

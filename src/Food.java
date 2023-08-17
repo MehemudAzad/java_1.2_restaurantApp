@@ -5,7 +5,9 @@ public class Food {
     private double price;//RestaurantId,Category,Name,Price
 
 
-    //constructors
+    /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+       constructors
+    -=-=-=-=-=-=-=-=-=-=-=-=-=-=*/
     Food(int restaurantId, String category, String name, double price){
         this.restaurantId = restaurantId;
         this.category = category;
@@ -13,7 +15,9 @@ public class Food {
         this.price = price;
     }
 
-    //setter and getters
+    /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+       setter and getters
+    -=-=-=-=-=-=-=-=-=-=-=-=-=-=*/
     public int getRestaurantId() {
         return restaurantId;
     }
