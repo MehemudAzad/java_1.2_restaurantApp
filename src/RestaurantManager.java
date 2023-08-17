@@ -71,7 +71,7 @@ public class RestaurantManager {
     }
 
     //restaurant search by score
-    public List<String> searchRestaurantsByScore(int lowerScore, int upperScore){
+    public List<String> searchRestaurantsByScore(double lowerScore, double upperScore){
         List<String> ans = new ArrayList<>();
         for (Restaurant r : restaurants) {
             if (r.getScore() >= lowerScore && r.getScore() <= upperScore) {
@@ -116,7 +116,7 @@ public class RestaurantManager {
     //display category wise restaurant names
     public void displayCategoryWiseNames(){
         for(String str : catagoryList){
-            System.out.println(str+": ");
+            System.out.print(str+": ");
             for(Restaurant r : restaurants){
                 if(r.getCategories().contains(str)){
                     System.out.print(r.getName() + ", ");
@@ -197,7 +197,7 @@ public class RestaurantManager {
         return ans;
     }
     //5 search by price range//price is store as double in food items
-    public List<String> searchFoodItemsByPrice(int lowerBound, int upperBound){
+    public List<String> searchFoodItemsByPrice(double lowerBound, double upperBound){
         List<String> ans = new ArrayList<>();
 
         for (Food f : foodItems) {
@@ -208,11 +208,12 @@ public class RestaurantManager {
         return ans;
     }
     //6 search by price range and restaurant name
-    public List<String> searchFoodItemsByPriceAndRestName(int lowerBound, int upperBound, String resName){
+    public List<String> searchFoodItemsByPriceAndRestName(double lowerBound, double upperBound, String resName){
         List<String> ans = new ArrayList<>();
 
+        int restId = getRestIdByName(resName);
         for (Food f : foodItems) {
-            if ((f.getPrice() <= upperBound && f.getPrice() >= lowerBound) && (f.getRestaurantId() == getRestIdByName(resName))) {
+            if ((f.getRestaurantId() == restId) && (f.getPrice() <= upperBound && f.getPrice() >= lowerBound)) {
                 ans.add(f.getName());
             }
         }

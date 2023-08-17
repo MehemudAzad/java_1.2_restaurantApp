@@ -7,7 +7,29 @@ public class RestaurantApp {
 
     private static final String INPUT_FILE_NAME = "restaurant.txt";
     private static final String INPUT_FILE_NAME2 = "menu.txt";
-    
+    private static final String OUTPUT_FILE_NAME = "output.txt";
+
+
+    public static void displayFoodDetails(Food f) {
+        System.out.println("Restaurant ID: " + f.getRestaurantId());
+        System.out.println("Food Name: " + f.getName());
+        System.out.println("Price: " + f.getPrice());
+        System.out.println("Category: " + f.getCategory());
+        System.out.println();
+    }
+    public static void displayRestaurantDetails(Restaurant r) {
+        System.out.println("Restaurant ID: " + r.getId());
+        System.out.println("Restaurant Name: " + r.getName());
+        System.out.println("Score: " + r.getScore());
+        System.out.println("Price: " + r.getPrice());
+        System.out.println("Zip Code: " + r.getZipcode());
+
+        System.out.println("Categories: ");
+        for (String category : r.getCategories()) {
+            System.out.println("\t" + category);
+        }
+        System.out.println();
+    }
     //main
     public static void main(String[] args) throws IOException {
         //take input
@@ -71,7 +93,7 @@ public class RestaurantApp {
                         String price;
                         String zipcode;
                         String category;
-                        int lower, upper;
+                        double lower, upper;
                         List<String> results;
 
                         System.out.println("Restaurant Searching Options:");
@@ -91,6 +113,7 @@ public class RestaurantApp {
                             //search by :
                             case 1 -> {
                                 //name
+                                System.out.println("Enter restaurant name: ");
                                 name = scanner.nextLine();
                                 int index = restaurantManager.searchRestaurantByName(name);
                                 if (index != -1) {
@@ -103,10 +126,10 @@ public class RestaurantApp {
                             case 2 -> {
                                 //score
                                 System.out.println("Enter the lower bound: ");
-                                lower = scanner.nextInt();
+                                lower = scanner.nextDouble();
                                 scanner.nextLine();
                                 System.out.println("Enter the upper bound: ");
-                                upper = scanner.nextInt();
+                                upper = scanner.nextDouble();
                                 scanner.nextLine();
                                 results = restaurantManager.searchRestaurantsByScore(lower, upper);
                                 //print it
@@ -136,8 +159,8 @@ public class RestaurantApp {
                             }
                             case 4 -> {
                                 //by price
-                                price = scanner.nextLine();
                                 System.out.println("Enter the price: ");
+                                price = scanner.nextLine();
                                 results = restaurantManager.searchRestaurantsByPrice(price);
                                 //print it
                                 if (results.isEmpty()) {
@@ -151,8 +174,8 @@ public class RestaurantApp {
                             }
                             case 5 -> {
                                 //by zipcode;
-                                zipcode = scanner.nextLine();
                                 System.out.println("Enter the zipcode: ");
+                                zipcode = scanner.nextLine();
                                 results = restaurantManager.searchRestaurantsByZipcode(zipcode);
                                 //print it
                                 if (results.isEmpty()) {
@@ -182,8 +205,8 @@ public class RestaurantApp {
                         String foodName;
                         String resName;
                         String foodCategory;
-                        int upperBoundPrice;
-                        int lowerBoundPrice;
+                        double upperBoundPrice;
+                        double lowerBoundPrice;
                         List<String> results;
 
                         /*Food Item Searching Options:
@@ -214,6 +237,7 @@ public class RestaurantApp {
                             //search food items by
                             case 1 -> {
                                 //name of food
+                                System.out.println("Enter name of food: ");
                                 foodName = scanner.nextLine();
                                 results = restaurantManager.searchFoodItemsByName(foodName);
                                 if (results.isEmpty()) {
@@ -227,7 +251,9 @@ public class RestaurantApp {
                             }
                             case 2 -> {
                                 //name of a given restaurant and food
+                                System.out.println("Enter name of food: ");
                                 foodName = scanner.nextLine();
+                                System.out.println("Enter name of restaurant: ");
                                 resName = scanner.nextLine();
                                 results = restaurantManager.searchFoodItemsByNameAndRest(foodName, resName);
                                 //print
@@ -242,6 +268,7 @@ public class RestaurantApp {
                             }
                             case 3 -> {
                                 //category of food
+                                System.out.println("Enter name of category: ");
                                 foodCategory = scanner.nextLine();
                                 results = restaurantManager.searchRestaurantsByCategory(foodCategory);
                                 //print
@@ -256,7 +283,9 @@ public class RestaurantApp {
                             }
                             case 4 -> {
                                 //category in a given restaurant
+                                System.out.println("Enter name of food: ");
                                 foodCategory = scanner.nextLine();
+                                System.out.println("Enter name of restaurant: ");
                                 resName = scanner.nextLine();
                                 results = restaurantManager.searchFoodItemsByCatagoryAndRest(resName, foodCategory);
                                 //print
@@ -271,8 +300,13 @@ public class RestaurantApp {
                             }
                             case 5 -> {
                                 //by price range of food
-                                upperBoundPrice = Integer.parseInt(scanner.nextLine());
-                                lowerBoundPrice = Integer.parseInt(scanner.nextLine());
+                                System.out.println("Enter lower bound  of price : ");
+                                lowerBoundPrice = scanner.nextDouble();
+                                scanner.nextLine();
+                                System.out.println("Enter upper bound of price : ");
+                                upperBoundPrice = scanner.nextDouble();
+                                scanner.nextLine();
+
                                 results = restaurantManager.searchFoodItemsByPrice(lowerBoundPrice, upperBoundPrice);
                                 //print
                                 if (results.isEmpty()) {
@@ -286,8 +320,13 @@ public class RestaurantApp {
                             }
                             case 6 -> {
                                 //by price range in a given restaurant
-                                upperBoundPrice = Integer.parseInt(scanner.nextLine());
-                                lowerBoundPrice = Integer.parseInt(scanner.nextLine());
+                                System.out.println("Enter lower bound  of price : ");
+                                lowerBoundPrice = scanner.nextDouble();
+                                scanner.nextLine();
+                                System.out.println("Enter upper bound of price : ");
+                                upperBoundPrice = scanner.nextDouble();;
+                                scanner.nextLine();
+                                System.out.println("Enter name of restaurant: ");
                                 resName = scanner.nextLine();
                                 results = restaurantManager.searchFoodItemsByPriceAndRestName(lowerBoundPrice, upperBoundPrice, resName);
                                 //print
@@ -374,19 +413,22 @@ public class RestaurantApp {
                     //add food item
                     //RestaurantId,Category,Name,Price
                     Food f = null;
+                    System.out.println("Enter the id of restaurant: ");
+                    int id = scanner.nextInt();
+                    scanner.nextLine();
                     System.out.println("Enter the name of food item: ");
                     String foodName = scanner.nextLine();
                     System.out.println("Enter the name of category: ");
                     String categoryName = scanner.nextLine();
                     System.out.println("Enter the price of restaurant: ");
                     double foodPrice = Double.parseDouble(scanner.nextLine());
-                    f = new Food(RestaurantManager.foodItemsAdded + 1, categoryName, foodName, foodPrice);
+                    f = new Food(id, categoryName, foodName, foodPrice);
                     restaurantManager.addFood(f);
                 }
                 case 5 -> System.out.println("Exiting system.");
 
 //                    BufferedWriter bw = new BufferedWriter(new FileWriter(OUTPUT_FILE_NAME));
-//                    bw.write(text);
+//                    bw.write();
 //                    bw.write(System.lineSeparator());
 //                    bw.close();
                 //write back into the files
