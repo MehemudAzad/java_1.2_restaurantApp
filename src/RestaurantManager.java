@@ -7,8 +7,8 @@ public class RestaurantManager {
     private List<Restaurant> restaurants;
     private List<Food> foodItems;
     private List<String> catagoryList;
-    public static int foodItemsAdded;
-    public static int restaurantAdded;
+    public int foodItemsAdded;
+    public int restaurantAdded;
 
 
 
@@ -31,6 +31,8 @@ public class RestaurantManager {
         this.restaurants = new ArrayList<>();
         this.foodItems = new ArrayList<>();
         this.catagoryList = new ArrayList<>();
+        foodItemsAdded = 0;
+        restaurantAdded = 0;
     }
 
     //addRestaurant
@@ -171,7 +173,7 @@ public class RestaurantManager {
         return ans;
     }
     //3 search by category
-    public List<String> searchFoodItemsBy(String category){
+    public List<String> searchFoodItemsByCategory(String category){
         List<String> ans = new ArrayList<>();
 
         for (Food f : foodItems) {
@@ -184,11 +186,11 @@ public class RestaurantManager {
     }
 
     //4search by category and restaurant
-    public List<String> searchFoodItemsByCatagoryAndRest(String category, String resName){
+    public List<String> searchFoodItemsByCategoryAndRest(String category, String resName){
         List<String> ans = new ArrayList<>();
-
+        int restId = getRestIdByName(resName);
         for (Food f : foodItems) {
-            if ((f.getRestaurantId() == getRestIdByName(resName)) && f.getName().toLowerCase().contains(category.toLowerCase())) {
+            if ((f.getRestaurantId() ==restId) && f.getName().toLowerCase().contains(category.toLowerCase())) {
                 //print all the names with the matching output
                 ans.add(f.getName());
             }

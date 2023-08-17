@@ -32,12 +32,14 @@ public class RestaurantApp {
     }
     //main
     public static void main(String[] args) throws IOException {
-        //take input
+        //initialize
         RestaurantManager restaurantManager = new RestaurantManager();
         //declare scanner
         Scanner scanner = new Scanner(System.in);
+        //declare reader
         BufferedReader br = new BufferedReader(new FileReader(INPUT_FILE_NAME));
 
+        //input for restaurants
         while (true) {
             String line = br.readLine();
             if (line == null) break;
@@ -56,6 +58,7 @@ public class RestaurantApp {
         }
         br.close();
 
+        //input for foods
         br = new BufferedReader(new FileReader(INPUT_FILE_NAME2));
 
         while (true) {
@@ -63,11 +66,22 @@ public class RestaurantApp {
             if (line == null) break;
 
             String[] array = line.split(",", -1);
-            if (array.length == 4) {
-                Food f = new Food(Integer.parseInt(array[0]), array[1], array[2], Double.parseDouble(array[3]));
-                restaurantManager.addFood(f);
+
+            int restaurantId = Integer.parseInt(array[0]);
+            String category = array[1];
+            String foodName = array[2];
+
+            if(array.length > 4){
+                for(int i = 3; i < array.length - 1; i++){
+                    foodName = foodName.concat("," + array[i]);
+                }
             }
+            double price = Double.parseDouble(array[array.length-1]);
+
+                Food f = new Food(restaurantId, category, foodName, price);
+                restaurantManager.addFood(f);
         }
+
         br.close();
 
         int choice;
@@ -110,7 +124,7 @@ public class RestaurantApp {
                         scanner.nextLine(); // Consume the newline character
 
                         switch (option) {
-                            //search by :
+                            //name :
                             case 1 -> {
                                 //name
                                 System.out.println("Enter restaurant name: ");
@@ -270,7 +284,7 @@ public class RestaurantApp {
                                 //category of food
                                 System.out.println("Enter name of category: ");
                                 foodCategory = scanner.nextLine();
-                                results = restaurantManager.searchRestaurantsByCategory(foodCategory);
+                                results = restaurantManager.searchFoodItemsByCategory(foodCategory);
                                 //print
                                 if (results.isEmpty()) {
                                     System.out.println("No such food item with this category");
@@ -287,7 +301,7 @@ public class RestaurantApp {
                                 foodCategory = scanner.nextLine();
                                 System.out.println("Enter name of restaurant: ");
                                 resName = scanner.nextLine();
-                                results = restaurantManager.searchFoodItemsByCatagoryAndRest(resName, foodCategory);
+                                results = restaurantManager.searchFoodItemsByCategoryAndRest(foodCategory, resName);
                                 //print
                                 if (results.isEmpty()) {
                                     System.out.println("“No such food item with this category on the menu of this restaurant");
@@ -366,23 +380,29 @@ public class RestaurantApp {
                 }
                 case 3 -> {
                     //add restaurants
+                    String resName;
+                    double score;
+                    String foodZipcode;
+                    String price;
+                    String category1, category2, category3;
 //                    int id,string Name,double Score,string Price,string ZipCode,Category1,Category2,Category3
                     Restaurant r = null;
                     System.out.println("Enter the name of restaurant: ");
-                    String resName = scanner.nextLine();
-                    System.out.println("Enter the name of restaurant: ");
-                    double score = scanner.nextDouble();
+                    resName = scanner.nextLine();
+                    System.out.println("Enter the score of restaurant: ");
+                    score = scanner.nextDouble();
                     scanner.nextLine();
                     System.out.println("Enter the price of restaurant: ");
-                    String price = scanner.nextLine();
+                    price = scanner.nextLine();
                     System.out.println("Enter the zipcode of restaurant: ");
-                    String foodZipcode = scanner.nextLine();
+                    foodZipcode = scanner.nextLine();
                     //take the number of categories and use if else to handle cases
                     int cnt;
                     System.out.println("Enter the number of categories: ");
                     cnt = scanner.nextInt();
-                    String category1, category2, category3;
-                    if (cnt == 1) {
+                    scanner.nextLine();
+
+                    if (cnt == 3) {
                         System.out.println("Enter the name of category1: ");
                         category1 = scanner.nextLine();
                         System.out.println("Enter the name of category2: ");
@@ -390,7 +410,7 @@ public class RestaurantApp {
                         System.out.println("Enter the name of category3: ");
                         category3 = scanner.nextLine();
 
-                        r = new Restaurant(RestaurantManager.restaurantAdded + 1, resName, score, price, foodZipcode, category1, category2, category3);
+                        r = new Restaurant(restaurantManager.restaurantAdded + 1, resName, score, price, foodZipcode, category1, category2, category3);
 
                     } else if (cnt == 2) {
                         System.out.println("Enter the name of category1: ");
@@ -398,16 +418,17 @@ public class RestaurantApp {
                         System.out.println("Enter the name of category2: ");
                         category2 = scanner.nextLine();
 
-                        r = new Restaurant(RestaurantManager.restaurantAdded + 1, resName, score, price, foodZipcode, category1, category2);
+                        r = new Restaurant(restaurantManager.restaurantAdded + 1, resName, score, price, foodZipcode, category1, category2);
 
-                    } else if (cnt == 3) {
+                    } else if (cnt == 1) {
                         System.out.println("Enter the name of category1: ");
                         category1 = scanner.nextLine();
 
-                        r = new Restaurant(RestaurantManager.restaurantAdded + 1, resName, score, price, foodZipcode, category1);
+                        r = new Restaurant(restaurantManager.restaurantAdded + 1, resName, score, price, foodZipcode, category1);
 
                     }
                     restaurantManager.addRestaurant(r);
+                    System.out.println("Restaurant added successfully");
                 }
                 case 4 -> {
                     //add food item
@@ -424,6 +445,7 @@ public class RestaurantApp {
                     double foodPrice = Double.parseDouble(scanner.nextLine());
                     f = new Food(id, categoryName, foodName, foodPrice);
                     restaurantManager.addFood(f);
+                    System.out.println("Food item added successfully");
                 }
                 case 5 -> System.out.println("Exiting system.");
 
