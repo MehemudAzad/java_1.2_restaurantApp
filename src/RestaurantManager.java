@@ -1,6 +1,4 @@
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,6 +82,7 @@ public class RestaurantManager {
         }
         return false;
     }
+
     //write restaurants to file again
     public void writeRestaurantsToFile(String OUTPUT_FILE_NAME) throws IOException {
         BufferedWriter bw = new BufferedWriter(new FileWriter(OUTPUT_FILE_NAME));
@@ -122,20 +121,16 @@ public class RestaurantManager {
      /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         restaurant operations
      -=-=-=-=-=-=-=-=-=-=-=-=-=-=*/
-
-    public int searchRestaurantByName(String name){
-        int searchIndex = -1;
-        List<String> ans = new ArrayList<>();
-        for(int i = 0; i<restaurants.size(); i++){
-            Restaurant r = restaurants.get(i);
-            if(r.getName().equalsIgnoreCase(name)){
-                searchIndex = i;
-                return searchIndex;
+    //1 restaurant search by name
+    public List<Restaurant> searchRestaurantByName(String resName){
+        List<Restaurant> ans = new ArrayList<>();
+        for (Restaurant r : restaurants) {
+            if (r.getName().toLowerCase().contains(resName.toLowerCase())) {
+                ans.add(r);
             }
-
         }
-        return -1;
-    }
+        return ans;
+    }//r.getName().equalsIgnoreCase(name)
 
     //2 restaurant search by score
     public List<Restaurant> searchRestaurantsByScore(double lowerScore, double upperScore){
@@ -180,20 +175,30 @@ public class RestaurantManager {
     }
 
     //6 display category wise restaurant names
-    public void displayCategoryWiseNames(){
-        for(String str : catagoryList){
-            if(str.equalsIgnoreCase("")){
+    public void displayCategoryWiseNames() {
+        for (String str : catagoryList) {
+            if (str.equalsIgnoreCase("")) {
                 continue;
             }
-            System.out.print(str+": ");
-            for(Restaurant r : restaurants){
-                if(r.getCategories().contains(str)){
-                    System.out.print(r.getName() + ", ");
+
+            System.out.print(str + ": ");
+            boolean firstRestaurantPrinted = false;
+
+            for (Restaurant r : restaurants) {
+                if (r.getCategories().contains(str)) {
+                    if (firstRestaurantPrinted) {
+                        System.out.print(", ");
+                    } else {
+                        firstRestaurantPrinted = true;
+                    }
+
+                    System.out.print(r.getName());
                 }
             }
-            System.out.println();//new line
+            System.out.println(); // new line
         }
     }
+
 
 
      /*-------------------------
@@ -230,7 +235,7 @@ public class RestaurantManager {
         List<Food> ans = new ArrayList<>();
 
         for (Food f : foodItems) {
-            if (f.getName().toLowerCase().contains(category.toLowerCase())) {
+            if (f.getCategory().toLowerCase().contains(category.toLowerCase())) {
                 //print all the names with the matching output
                 ans.add(f);
             }
@@ -243,7 +248,7 @@ public class RestaurantManager {
         List<Food> ans = new ArrayList<>();
         int restId = getRestIdByName(resName);
         for (Food f : foodItems) {
-            if ((f.getRestaurantId() ==restId) && f.getName().toLowerCase().contains(category.toLowerCase())) {
+            if ((f.getRestaurantId() == restId) && f.getCategory().toLowerCase().contains(category.toLowerCase())) {
                 //print all the names with the matching output
                 ans.add(f);
             }

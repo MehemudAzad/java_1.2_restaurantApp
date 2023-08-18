@@ -12,25 +12,25 @@ public class RestaurantApp {
         DISPLAY FUNCTIONS
      -------------------------*/
 
-    public static void displayFoodDetails(Food f) {
+    public static void displayFoodDetails(Food f){
         System.out.println("Restaurant ID: " + f.getRestaurantId());
         System.out.println("Food Name: " + f.getName());
         System.out.println("Price: " + f.getPrice());
         System.out.println("Category: " + f.getCategory());
-        System.out.println();
+        System.out.println("");
     }
-    public static void displayRestaurantDetails(Restaurant r) {
+    public static void displayRestaurantDetails(Restaurant r){
         System.out.println("Restaurant ID: " + r.getId());
         System.out.println("Restaurant Name: " + r.getName());
         System.out.println("Score: " + r.getScore());
         System.out.println("Price: " + r.getPrice());
-        System.out.println("Zip Code: " + r.getZipcode());
+        System.out.println("ZipCode: " + r.getZipcode());
 
         System.out.println("Categories: ");
-        for (String category : r.getCategories()) {
-            System.out.println("\t" + category);
+        for (String category : r.getCategories()){
+            System.out.println("\t\t" + category);
         }
-        System.out.println();
+        System.out.println("");
     }
     /*------------------------
         MAIN
@@ -90,7 +90,7 @@ public class RestaurantApp {
 
         int choice;
         int option;
-
+        //MAIN MENU
         do{
             System.out.println("Main menu: ");
             System.out.println("1) Search Restaurants");
@@ -133,12 +133,15 @@ public class RestaurantApp {
                                 //name
                                 System.out.println("Enter restaurant name: ");
                                 name = scanner.nextLine();
-                                int index = restaurantManager.searchRestaurantByName(name);
-                                if (index != -1) {
-                                    String resName = restaurantManager.getRestaurants().get(index).getName();
-                                    System.out.println(resName);
+                                results = restaurantManager.searchRestaurantByName(name);
+                                //print it
+                                if (results.isEmpty()) {
+                                    System.out.println("No such restaurant with '"+ name + "' exist.");
                                 } else {
-                                    System.out.println("No such restaurant with this name");
+                                    System.out.println("Restaurants within the score range are: ");
+                                    for (Restaurant result : results) {
+                                        displayRestaurantDetails(result);
+                                    }
                                 }
                             }
                             case 2 -> {
@@ -301,7 +304,7 @@ public class RestaurantApp {
                             }
                             case 4 -> {
                                 //category in a given restaurant
-                                System.out.println("Enter name of food: ");
+                                System.out.println("Enter name of category: ");
                                 foodCategory = scanner.nextLine();
                                 System.out.println("Enter name of restaurant: ");
                                 resName = scanner.nextLine();
@@ -359,6 +362,7 @@ public class RestaurantApp {
                             }
                             case 7 -> {
                                 //costliest foodItems on the menu in a given restaurant
+                                System.out.println("Enter the name of Restaurant: ");
                                 resName = scanner.nextLine();
                                 results = restaurantManager.displayCostliestFoodItems(resName);
 
@@ -457,6 +461,7 @@ public class RestaurantApp {
                     boolean restCheck = restaurantManager.restaurantExistsById(id);
                     if(!restCheck){
                         System.out.println("Restaurant doesn't exist");
+                        break;
                     }
 
                     System.out.println("Enter the name of food item: ");
@@ -465,11 +470,12 @@ public class RestaurantApp {
                     boolean foodNameCheck = restaurantManager.foodExistsInRestaurant(id, foodName);
                     if(foodNameCheck){
                         System.out.println("Food item already exists in the restaurant");
+                        break;
                     }
 
                     System.out.println("Enter the name of category: ");
                     categoryName = scanner.nextLine();
-                    System.out.println("Enter the price of restaurant: ");
+                    System.out.println("Enter the price of food item: ");
                     foodPrice = Double.parseDouble(scanner.nextLine());
                     f = new Food(id, categoryName, foodName, foodPrice);
                     restaurantManager.addFood(f);
